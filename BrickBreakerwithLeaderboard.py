@@ -22,6 +22,7 @@ def makeConn():
     return conn
 
 def makeTable(conn):
+    #Cat
     conn.execute("CREATE TABLE IF NOT EXISTS SCORES(ID INT PRIMARY KEY NOT NULL, NAME TEXT NOT NULL, SCORE INT NOT NULL, BLOCKS TEXT NOT NULL);")
     conn.commit()
 
@@ -78,7 +79,7 @@ def retrieveData(conn):
             if MaxScore < score[0]:
                 MaxScore = score[0]
     score = MaxScore
-
+    #MrGerwin
 def findHighScores(conn):
     #Returns a list of names and scores for the top 3 scores from DB.
     
