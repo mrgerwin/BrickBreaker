@@ -2,7 +2,7 @@ import pygame
 import random
 import sqlite3
 import ast
-
+#Hi it's Max
 def drawHighScoreScreen():
     TitleText = GameFont.render("HIGH SCORES", True, white)
     Line1 = GameFont.render(HighList[0][0] + "    " + str(HighList[1][0]), True, white)
