@@ -124,7 +124,7 @@ def findHighScores(conn):
     return [names, scores]
 
 def drawScore():
-    global score, white
+    global score, white, DiePlaying
     ScoreText = GameFont.render("Score:"+ str(score), True, white)
     NameText = GameFont.render(str(player), True, white)
     LevelText = GameFont.render(str("Level 1"), True, white)
@@ -138,7 +138,11 @@ def drawScore():
     
     if lives <= 0:
         window.blit(GameOverText, (screen_size[0]//2 - 70, screen_size[1]//2+50))
-    
+        if DiePlaying==0:
+            die = pygame.mixer.Sound("Death.mp3")
+            pygame.mixer.Sound.play(die)
+            DiePlaying=1
+
 
 def Collide(pad, padSpeed, ball):
     
@@ -163,9 +167,9 @@ def drawBall():
     # If the ball hits the bottom of the screen
     if ball.bottom >= screen_size[1]:
         #speed[1] = -speed[1]
-        #print("bottom screen triggered")
-        reset()
+        print("bottom screen triggered")
         lives -= 1
+        reset()
     # If the ball hits the top of the screen
     if ball.top <= 0:
         speed[1] = -speed[1]
@@ -283,12 +287,19 @@ class Ball:
     def reset(self):
         self.location = [screen_size[0]//2, screen_size[1]//2]
         self.speed = [0,0]
+        if lives >= 2:
+            boom = pygame.mixer.Sound("vineboombassboosted.mp3")
+            pygame.mixer.Sound.play(boom)
 
 timer = pygame.time.Clock()
 
 screen_size = [600,800]
 #This makes a window
 window = pygame.display.set_mode(screen_size)
+
+#sound Attributes
+
+DiePlaying=0
 
 #Ball Attributes
 speed = [0, 0]
@@ -353,6 +364,9 @@ while True:
             sys.exit(0)
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
+                pygame.mixer.init()
+                theMusic = pygame.mixer.music.load("WiiShopMusic.mp3")
+                pygame.mixer.music.play(-1)
                 startScreen = False
             if event.key == pygame.K_RIGHT:
                 if startScreen == False:
