@@ -213,12 +213,14 @@ class Block:
             self.hits -= 1
             score += self.points
             ball.speed[1] = -ball.speed[1]
-            if self.hits == 0:
-                return True
+            BlockHit = pygame.mixer.Sound("GoofyLaugh.mp3")
+            pygame.mixer.Sound.play(BlockHit)
+                if self.hits == 0:
+                    return True
+                else:
+                    return False
             else:
                 return False
-        else:
-            return False
 
 class SpeedBlock(Block):
     def __init__(self, position):
