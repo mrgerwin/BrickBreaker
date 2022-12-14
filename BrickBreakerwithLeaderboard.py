@@ -134,7 +134,7 @@ def drawScore():
     global score, white, DiePlaying
     ScoreText = GameFont.render("Score:"+ str(score), True, white)
     NameText = GameFont.render(str(player), True, white)
-    LevelText = GameFont.render(str("Level 1"), True, white)
+    LevelText = GameFont.render("lvl "+str(lvl), True, white)
     LivesText = GameFont.render("Lives:"+str(lives), True, white)
     GameOverText = GameFont.render("GAME OVER", True, white)
     
@@ -213,12 +213,14 @@ class Block:
             self.hits -= 1
             score += self.points
             ball.speed[1] = -ball.speed[1]
-            if self.hits == 0:
-                return True
+            BlockHit = pygame.mixer.Sound("GoofyLaugh.mp3")
+            pygame.mixer.Sound.play(BlockHit)
+                if self.hits == 0:
+                    return True
+                else:
+                    return False
             else:
                 return False
-        else:
-            return False
 
 class SpeedBlock(Block):
     def __init__(self, position):
@@ -341,7 +343,7 @@ score = 0
 lives = 3
 
 ball1 = Ball(white, [screen_size[0]//2, screen_size[1]//2])
-
+lvl=1
 #Blocks
 color_list = [red, blue, lightPurple]
 blocks = []
@@ -358,7 +360,17 @@ for j in range(3):
 for m in range(6):
     a_block = SpeedBlock([m*100, 90])
     blocks.append(a_block)
+blocks2 = []
 
+for i in range(6):
+    blocks2.append(SpeedBlock([i*100,0]))
+    
+for j in range(6):
+    blocks2.append(MultiBall([j*100, 30]))
+    
+for k in range(6):
+    blocks2.append(Block(random.choice(color_list), 100, [k*100, 60], 1, 3))
+    
 player = input("What is your Name?")
 conn = makeConn()
 makeTable(conn)
@@ -421,6 +433,10 @@ while True:
             for ball in balls:
                 if block.collide(ball):
                     blocks.remove(block)
+                    if len(blocks) == 0:
+                        lvl += 1
+                        if lvl == 2:
+                            blocks = blocks2
             
         drawScore()
     pygame.display.flip()
