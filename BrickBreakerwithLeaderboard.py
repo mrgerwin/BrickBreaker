@@ -22,6 +22,7 @@ def makeConn():
     return conn
 
 def makeTable(conn):
+    #Cat
     conn.execute("CREATE TABLE IF NOT EXISTS SCORES(ID INT PRIMARY KEY NOT NULL, NAME TEXT NOT NULL, SCORE INT NOT NULL, BLOCKS TEXT NOT NULL);")
     conn.commit()
 
