@@ -144,6 +144,8 @@ def Collide(pad, padSpeed, ball):
     if ball.rect.colliderect(pad):
         ball.speed[1] = -ball.speed[1]
         ball.speed[0] += padSpeed
+        VineBoom = pygame.mixer.Sound.play("VineBoom.mp3")
+        pygame.mixer.Sound.play(VineBoom)
 
 def drawBall():
     global white, location, screen_size, speed, score, ball, lives
