@@ -4,18 +4,25 @@ import sqlite3
 import ast
 
 def drawHighScoreScreen():
+    global DisplayedInfo
     TitleText = GameFont.render("HIGH SCORES", True, white)
     Line1 = GameFont.render(HighList[0][0] + "    " + str(HighList[1][0]), True, white)
     Line2 = GameFont.render(HighList[0][1] + "    " + str(HighList[1][1]), True, white)
     Line3 = GameFont.render(HighList[0][2] + "    " + str(HighList[1][2]), True, white)
     
-    Directions = GameFont.render("Press ENTER to Continue", True, white)
+    ListOfBlocks = [["Light Purple blocks are average", "Red blocks speed up the ball", "Grey blocks add a second ball"], [lightPurple, red, grey]]
+    BlockInstructions = GameFont.render(ListOfBlocks[0][DisplayedInfo], True, ListOfBlocks[1][DisplayedInfo])
+    
+    Directions = GameFont.render("Press SPACE to Continue", True, white)
+    StartDirections = GameFont.render("Press ENTER to Start", True, white)
     
     window.blit(TitleText, (screen_size[0]//2-150, 100))
     window.blit(Line1, (screen_size[0]//2-150, 130))
     window.blit(Line2, (screen_size[0]//2-150, 160))
     window.blit(Line3, (screen_size[0]//2-150, 190))
-    window.blit(Directions, (screen_size[0]//2-200, 250))
+    window.blit(BlockInstructions, (screen_size[0]//2-250, 250))
+    window.blit(Directions, (screen_size[0]//2-200, 450))
+    window.blit(StartDirections, (screen_size[0]//2-200, 490))
 
 def makeConn():
     conn=sqlite3.connect("breaker.db")
@@ -226,7 +233,7 @@ class SpeedBlock(Block):
 
 class MultiBall(Block):
     def __init__(self, position):
-        Block.__init__(self, [100,100,100], 100, position, 10, 1)
+        Block.__init__(self, grey, 100, position, 10, 1)
     
     def collide(self, ball):
         global score
@@ -295,6 +302,7 @@ speed = [0, 0]
 black = (0,0,0)
 white = (255, 255, 255)
 lightPurple = (150, 111, 214)
+grey = (100, 100, 100)
 red = (255, 0, 0)
 radius = 20
 location = [500, 300]
@@ -329,6 +337,7 @@ blocks = []
 balls = [ball1]
 aBlock = MultiBall([0,200])
 blocks.append(aBlock)
+DisplayedInfo = 0
 
 for j in range(3):
     for i in range(6):
@@ -366,6 +375,10 @@ while True:
                 if startScreen == False:
                     if ball1.speed == [0,0]:
                         ball1.speed = random.choice(BallSpeeds)
+                else:
+                    DisplayedInfo += 1
+                    if DisplayedInfo == 3:
+                        DisplayedInfo = 0
             elif event.key == pygame.K_p:
                 if startScreen == False:
                     storeData(conn)
