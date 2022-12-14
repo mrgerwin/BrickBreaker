@@ -79,7 +79,7 @@ def retrieveData(conn):
             if MaxScore < score[0]:
                 MaxScore = score[0]
     score = MaxScore
-
+    #MrGerwin
 def findHighScores(conn):
     #Returns a list of names and scores for the top 3 scores from DB.
     
