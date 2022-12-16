@@ -146,7 +146,6 @@ def drawScore():
     if lives <= 0:
         window.blit(GameOverText, (screen_size[0]//2 - 70, screen_size[1]//2+50))
         if DiePlaying==0:
-            die = pygame.mixer.Sound("Death.mp3")
             pygame.mixer.Sound.play(die)
             DiePlaying=1
 
@@ -213,7 +212,6 @@ class Block:
             self.hits -= 1
             score += self.points
             ball.speed[1] = -ball.speed[1]
-            BlockHit = pygame.mixer.Sound("GoofyLaugh.mp3")
             pygame.mixer.Sound.play(BlockHit)
             if self.hits == 0:
                 return True
@@ -297,7 +295,6 @@ class Ball:
         self.location = [screen_size[0]//2, screen_size[1]//2]
         self.speed = [0,0]
         if lives >= 2:
-            boom = pygame.mixer.Sound("vineboombassboosted.mp3")
             pygame.mixer.Sound.play(boom)
 
 timer = pygame.time.Clock()
@@ -307,6 +304,11 @@ screen_size = [600,800]
 window = pygame.display.set_mode(screen_size)
 
 #sound Attributes
+pygame.mixer.init()
+BlockHit = pygame.mixer.Sound("GoofyLaugh.mp3")
+theMusic = pygame.mixer.music.load("WiiShopMusic.mp3")
+die = pygame.mixer.Sound("Death.mp3")
+boom = pygame.mixer.Sound("vineboombassboosted.mp3")
 
 DiePlaying=0
 
@@ -385,8 +387,6 @@ while True:
             sys.exit(0)
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
-                pygame.mixer.init()
-                theMusic = pygame.mixer.music.load("WiiShopMusic.mp3")
                 pygame.mixer.music.play(-1)
                 startScreen = False
             if event.key == pygame.K_RIGHT:
