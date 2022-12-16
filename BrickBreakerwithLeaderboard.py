@@ -15,6 +15,8 @@ def drawHighScoreScreen():
     
     Directions = GameFont.render("Press SPACE to Continue", True, white)
     StartDirections = GameFont.render("Press ENTER to Start", True, white)
+    StartDirections1 = GameFont.render("Press p to Save ", True, white)
+    StartDirections2 = GameFont.render("Press o to Open", True, white)
     
     window.blit(TitleText, (screen_size[0]//2-150, 100))
     window.blit(Line1, (screen_size[0]//2-150, 130))
@@ -23,6 +25,8 @@ def drawHighScoreScreen():
     window.blit(BlockInstructions, (screen_size[0]//2-250, 250))
     window.blit(Directions, (screen_size[0]//2-200, 450))
     window.blit(StartDirections, (screen_size[0]//2-200, 490))
+    window.blit(StartDirections1, (screen_size[0]//2-200, 540))
+    window.blit(StartDirections2, (screen_size[0]//2-200, 580))
 
 def makeConn():
     conn=sqlite3.connect("breaker.db")
