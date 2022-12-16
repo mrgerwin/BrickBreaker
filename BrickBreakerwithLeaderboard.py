@@ -201,6 +201,9 @@ class Block:
     
     def drawBlock(self):
         pygame.draw.rect(window, self.color, self.rect)
+        BlockFont = pygame.font.SysFont("consolas", 12)
+        BlockText = BlockFont.render(str(self.hits), True, white)
+        window.blit(BlockText, self.position)
         
     def collide(self, ball):
         global score
