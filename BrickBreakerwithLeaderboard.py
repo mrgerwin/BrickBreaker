@@ -243,7 +243,7 @@ class MultiBall(Block):
         global score
         
         if self.rect.colliderect(ball):
-            print("Hit MultiBall")
+            pygame.mixer.Sound.play(Baller)
             score += self.points
             ball.speed[1] = -ball.speed[1]
             
@@ -309,7 +309,7 @@ BlockHit = pygame.mixer.Sound("GoofyLaugh.mp3")
 theMusic = pygame.mixer.music.load("WiiShopMusic.mp3")
 die = pygame.mixer.Sound("Death.mp3")
 boom = pygame.mixer.Sound("vineboombassboosted.mp3")
-
+Baller = pygame.mixer.Sound("Baller.mp3")
 DiePlaying=0
 
 #Ball Attributes
